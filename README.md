@@ -39,7 +39,7 @@ python3 -m venv .venv #check notification in vscode and click click yes
 1. Clone the repository:
 
 ```bash
-git clone git@github.com:ypenn21/adk-agents.git
+git clone git@github.com:ypenn21/ai-labs.git
 cd adk-agents
 ```
 
