@@ -203,15 +203,6 @@ FOR EACH ROW                  -- This means the trigger fires for each row affec
 EXECUTE PROCEDURE update_updated_time_tickets();
 ```
 
-
-### 7 - Create vector embeddings from the `description` field.
-
-```SQL
-ALTER TABLE tickets ADD COLUMN embedding vector(768) GENERATED ALWAYS AS (embedding('text-embedding-005',description)) STORED;
-```
-
-**Retrieval-Augmented Generation (RAG):** Leverages Cloud SQL's built-in [Vertex AI ML Integration](https://cloud.google.com/sql/docs/postgres/integrate-cloud-sql-with-vertex-ai) to fetch relevant/duplicate software bugs.
-
 ### 8 - Verify that the database is ready.
 
 From Cloud SQL studio, run:
