@@ -40,7 +40,7 @@ python3 -m venv .venv #check notification in vscode and click click yes
 
 ```bash
 git clone git@github.com:ypenn21/ai-labs.git
-cd adk-agents
+cd ai-labs
 ```
 
 2. Configure environment variables (via `.env.example` file):
