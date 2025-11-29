@@ -324,18 +324,7 @@ gcloud builds submit --region=us-central1 --tag us-central1-docker.pkg.dev/$PROJ
 gcloud builds submit . --config cloudbuild.yaml
 ```
 
-### 13 - Create Rag Engine Corpus in Vertexai
-
-Navigate to the Rag Engine in Vertexai and create a new corpus called user-chat-history
-![](images/vertexai-rag.png)
-
-Once its done. Click on the corpus and click on details to get the Resource name to use in your python adk app. 
-```bash
-# set using Resource name
-export RAG_CORPUS="projects/project-id/locations/region/ragCorpora/rag-corpus-id"
-```
-
-### 14 - Deploy the agent to Cloud Run 
+### 13 - Deploy the agent to Cloud Run 
 
 You need enable direct vpc-egress on Cloud Run deployment to connect to the Cloud Sql. Network is the same one with the private ip connection to Cloud Sql. Subnet can be any on the network.
 
@@ -345,32 +334,6 @@ export PROJECT_ID="project-id"
 # set using Resource name
 export RAG_CORPUS="projects/project-id/locations/region/ragCorpora/rag-corpus-id"
 export DB_URL="postgresql://postgres:pword@internal-ip-address:5432/tickets-db"
-
-#deploy adk custom ui with django
-gcloud run deploy adk-a2a-agent-bug-assist   --image=us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-agent-a2a-bug-assist:latest   --region=us-central1   --allow-unauthenticated   --cpu=4   --memory=2Gi   --network=default   --subnet=default   --vpc-egress=private-ranges-only   --set-env-vars=GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=us-central1,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL,AGENT_PORT=8080,AGENT_URL=https://adk-a2a-agent-bug-assist-803095609412.us-central1.run.app,DB_URL=postgresql://postgres:$DB_PASS@10.104.134.2:5432/tickets-db
-
-
-gcloud run deploy adk-agent-bug-assist \
-  --image=us-central1-docker.pkg.dev/genai-apps-25/adk/adk-agent-bug-assist:latest \
-  --region=us-central1 \
-  --allow-unauthenticated \
-  --cpu=4 \
-  --memory=2Gi \
-  --network=default \
-  --subnet=default \
-  --vpc-egress=private-ranges-only \
-  --set-env-vars=GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=us-central1,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL,DJANGO=true,AGENT_URL=https://adk-a2a-agent-bug-assist-803095609412.us-central1.run.app,DB_URL=postgresql://postgres:$DB_PASS@$internal-ip:5432/tickets-db
-
-gcloud run deploy adk-a2a-agent-bug-assist \
-  --image=us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-agent-a2a-bug-assist:latest \
-  --region=us-central1 \
-  --allow-unauthenticated \
-  --cpu=4 \
-  --memory=2Gi \
-  --network=default \
-  --subnet=default \
-  --vpc-egress=private-ranges-only \
-  --set-env-vars=GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=us-central1,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL,DJANGO=false,AGENT_URL=https://adk-a2a-agent-bug-assist-803095609412.us-central1.run.app,DB_URL=postgresql://postgres:$DB_PASS@$internal-ip:5432/tickets-db
 
 #deploy adk web ui bootstrapped
 gcloud run deploy adk-web-ui \
@@ -388,7 +351,7 @@ gcloud run deploy adk-web-ui \
 Check log to see that this deployment is successfully.
 
 
-### 15 - Test the Cloud Run Agent
+### 14 - Test the Cloud Run Agent
 
 Open the Cloud Run Service URL outputted by the previous step. 
 
