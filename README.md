@@ -178,11 +178,11 @@ From the Cloud Console (Cloud SQL), open **Cloud SQL Studio**.
 Log into the `tickets-db` database using the `postgres` user (password: `admin`, but note you can change to a more secure password under Cloud SQL > Primary Instance > Users).
 
 
-Open a new **Editor** tab. Then, paste in the SQL code from [`sql/data.sql`](sql/data.sql) to set up the table and create vector embeddings.
+Open a new **Editor** tab. Then, paste in the SQL code from [`sql/data.sql`](https://github.com/ypenn21/adk-agents/blob/main/sql/data.sql) to set up the table and create vector embeddings.
 
 ### 5 - Load in sample data. 
 
-Run the SQL code from [`sql/data.sql`](sql/data.sql) to load in sample data.
+Run the SQL code from [`sql/data.sql`](https://github.com/ypenn21/adk-agents/blob/main/sql/data.sql) to load in sample data.
 
 ```
 
