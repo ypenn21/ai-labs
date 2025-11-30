@@ -104,7 +104,7 @@ gcloud run deploy adk-web-ui-vertexai-agent \
    --network=default \
    --subnet=default \
    --vpc-egress=private-ranges-only \
-   --set-env-vars=VERTEX_AI_ENDPOINT_ID=2527670579629129728,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=us-central1,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL
+   --set-env-vars=VERTEX_AI_ENDPOINT_ID=$VERTEX_AI_ENDPOINT_ID,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=us-central1,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL
 ```
 
 Follow the url provided, select 'vertexai_agent' from the drop down window, then you can test the agent.
