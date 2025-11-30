@@ -2,7 +2,7 @@
 
 # Running the ADK Agents 🤖
 
-Before proceeding, ensure you have already deployed your Gemma 3 model to either GKE or Vertex AI by following one of the primary notebooks.
+Before proceeding, ensure you have already deployed your Gemma 3 model to either GKE or Vertex AI
 
 The instructions below correspond to the deployment option you chose.
 
@@ -26,6 +26,7 @@ GOOGLE_CLOUD_PROJECT= YOUR_VALUE_HERE
 GOOGLE_CLOUD_LOCATION= YOUR_VALUE_HERE
 
 # Only for model hosted on vertexai endpoint
+AGENT_MODE=VertexAI
 VERTEX_AI_ENDPOINT_ID=YOUR_VALUE_HERE
 
 # Model details only for models hosted on gke
@@ -43,6 +44,7 @@ GOOGLE_CLOUD_PROJECT=YOUR_VALUE_HERE
 GOOGLE_CLOUD_LOCATION=us-central1 # Or your preferred location
 GOOGLE_GENAI_USE_VERTEXAI=True
 # Only for model hosted on vertexai endpoint
+AGENT_MODE=VertexAI
 VERTEX_AI_ENDPOINT_ID=YOUR_VALUE_HERE
 
 # Model details only for models hosted on gke
