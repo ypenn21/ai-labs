@@ -343,8 +343,8 @@ gcloud run deploy adk-web-ui-vertexai-endpoint \
    --allow-unauthenticated \
    --cpu=4 \
    --memory=2Gi \
-   --network=vpc-demo-rag \
-   --subnet=subnet-psc-ew1 \
+   --network=default \
+   --subnet=default \
    --vpc-egress=private-ranges-only \
    --set-env-vars=VERTEX_AI_ENDPOINT_ID=$VERTEX_AI_ENDPOINT_ID,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=$GOOGLE_CLOUD_LOCATION,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL
 ```
@@ -391,14 +391,6 @@ psql -U postgres
 ```
 
 Then, initialize the database and `tickets` table by running the queries in [`sql/data.sql`](sql/data.sql).
-
-*note you don't need to create the extension for local environment. Only create the table and insert the records.
-
-```sql
-CREATE EXTENSION IF NOT EXISTS google_ml_integration CASCADE;
-CREATE EXTENSION IF NOT EXISTS vector CASCADE;
-GRANT EXECUTE ON FUNCTION embedding TO postgres;
-```
 
 ### 3 - Run the MCP Toolbox
 
