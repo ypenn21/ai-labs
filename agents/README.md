@@ -9,14 +9,14 @@ The instructions below correspond to the deployment option you chose.
 
 1. Set Up Environment Variables
 
-Use the file named [.env](.env). This file will configure the agent to communicate with your llm endpoint.
+Use the file named [.env](.env). This file will configure the agent to communicate with your llm endpoint locally.
 
 
 The `.env` file should look like the file content as below:
 
 ```bash
 # Choose Model Backend: 0 -> Gemini API key, 1 -> Vertex AI
-GOOGLE_GENAI_USE_VERTEXAI=True
+GOOGLE_GENAI_USE_VERTEXAI=FALSE
 
 # Gemini API key backend config
 GOOGLE_API_KEY=YOUR_VALUE_HERE
