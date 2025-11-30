@@ -33,9 +33,6 @@ DB_URL = os.environ.get("DB_URL", "postgresql://postgres:admin@localhost:5432/ti
 
 
 # adding memory https://google.github.io/adk-docs/sessions/memory/#how-memory-works-in-practice
-
-# The RAG Corpus name or ID
-RAG_CORPUS_RESOURCE_NAME = os.environ.get("RAG_CORPUS", "projects/genai-playground/locations/us-central1/ragCorpora/rag-corpus-id")
 # Optional configuration for retrieval
 SIMILARITY_TOP_K = 5
 VECTOR_DISTANCE_THRESHOLD = 0.7
