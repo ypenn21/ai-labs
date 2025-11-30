@@ -320,6 +320,7 @@ gcloud artifacts repositories create adk \
 Build the container image and push it to Artifact Registry with Cloud Build.
 
 ```bash
+cd agents
 gcloud builds submit . --config cloudbuild.yaml
 ```
 
@@ -328,21 +329,24 @@ gcloud builds submit . --config cloudbuild.yaml
 You need enable direct vpc-egress on Cloud Run deployment to connect to the Cloud Sql. Network is the same one with the private ip connection to Cloud Sql. Subnet can be any on the network.
 
 ```bash
+cd agents
 export MCP_TOOLBOX_URL=$(gcloud run services describe toolbox --region us-central1 --format "value(status.url)")
 export PROJECT_ID="project-id"
 export DB_URL="postgresql://postgres:pword@internal-ip-address:5432/tickets-db"
-
+export IMAGE_TAG="us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist-vertexai-endpoint:latest"
+export GOOGLE_CLOUD_LOCATION="us-central1"
+export VERTEX_AI_ENDPOINT_ID=231
 #deploy adk web ui bootstrapped
-gcloud run deploy adk-web-ui \
-   --image=us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist:latest \
-   --region=us-central1 \
+gcloud run deploy adk-web-ui-vertexai-endpoint \
+   --image=$IMAGE_TAG \
+   --region=$GOOGLE_CLOUD_LOCATION \
    --allow-unauthenticated \
    --cpu=4 \
    --memory=2Gi \
    --network=vpc-demo-rag \
    --subnet=subnet-psc-ew1 \
    --vpc-egress=private-ranges-only \
-   --set-env-vars=GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=us-central1,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL
+   --set-env-vars=VERTEX_AI_ENDPOINT_ID=$VERTEX_AI_ENDPOINT_ID,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=$GOOGLE_CLOUD_LOCATION,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL
 ```
 
 Check log to see that this deployment is successfully.
