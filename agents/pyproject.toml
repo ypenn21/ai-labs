@@ -11,5 +11,4 @@ dependencies = [
     "litellm>=1.74.8",
     "python-dotenv>=1.1.1",
     "toolbox-core==0.5.2",
-    "psycopg2-binary",
 ]
