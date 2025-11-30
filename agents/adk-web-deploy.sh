@@ -3,11 +3,15 @@
 
 # Exit immediately if a command exits with a non-zero status.
 set -e
-export MCP_TOOLBOX_URL=$(gcloud run services describe toolbox --region us-central1 --format "value(status.url)")
 export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
-export DB_PASS='pword'
-export VERTEX_AI_ENDPOINT_ID=''
+export VERTEX_AI_ENDPOINT_ID='1234567890'
 export GOOGLE_CLOUD_LOCATION=us-central1
+export MCP_TOOLBOX_URL=$(gcloud run services describe toolbox --region $GOOGLE_CLOUD_LOCATION --format "value(status.url)")
+export AGENT_MODE=VertexAI
+#if AGENT_MODE is GKE, set the following variables will set the model name and version. If AGENT_MODE is VertexAI, the following variables will not matter
+export MODEL_NAME='gemma-3-11b'
+export MODEL_VERSION='latest'
+
 # Check if PROJECT_ID is set
 if [ -z "$PROJECT_ID" ]; then
   echo "Error: PROJECT_ID environment variable is not set."
@@ -15,8 +19,7 @@ if [ -z "$PROJECT_ID" ]; then
 fi
 
 # Define the image tag
-IMAGE_TAG="us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist-vertexai-endpoint:latest"
-
+IMAGE_TAG="${GOOGLE_CLOUD_LOCATION}-docker.pkg.dev/${PROJECT_ID}/adk/adk-web-ui-agent-bug-assist-vertexai-endpoint:latest"
 # Step 1: Build the Docker image
 echo "Building the Docker image..."
 docker build \
@@ -38,4 +41,4 @@ gcloud run deploy adk-web-ui-vertexai-endpoint \
    --network=default \
    --subnet=default \
    --vpc-egress=private-ranges-only \
-   --set-env-vars=VERTEX_AI_ENDPOINT_ID=$VERTEX_AI_ENDPOINT_ID,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=$GOOGLE_CLOUD_LOCATION,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL
+   --set-env-vars=AGENT_MODE=$AGENT_MODE,VERTEX_AI_ENDPOINT_ID=$VERTEX_AI_ENDPOINT_ID,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=$GOOGLE_CLOUD_LOCATION,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL,MODEL_NAME=$MODEL_NAME,MODEL_VERSION=$MODEL_VERSION

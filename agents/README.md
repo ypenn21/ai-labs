@@ -34,43 +34,27 @@ AGENT_MODE=GKE
 MODEL_NAME = YOUR_VALUE_HERE
 MODEL_VERSION= YOUR_VALUE_HERE
 
+export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
+export VERTEX_AI_ENDPOINT_ID='1234567890'
+export GOOGLE_CLOUD_LOCATION=us-central1
+export MCP_TOOLBOX_URL=$(gcloud run services describe toolbox --region $GOOGLE_CLOUD_LOCATION --format "value(status.url)")
+
 ```
 
 2. Deploy the ADK Agent to Cloud Run
 
-Set up environment variables:
+Set up environment variables in the adk-web-deploy.sh script:
 ```
-GOOGLE_CLOUD_PROJECT=YOUR_VALUE_HERE
-GOOGLE_CLOUD_LOCATION=us-central1 # Or your preferred location
-GOOGLE_GENAI_USE_VERTEXAI=True
-# Only for model hosted on vertexai endpoint
-AGENT_MODE=VertexAI
-VERTEX_AI_ENDPOINT_ID=YOUR_VALUE_HERE
-
-# Model details only for models hosted on gke
-AGENT_MODE=GKE
-MODEL_NAME = YOUR_VALUE_HERE
-MODEL_VERSION= YOUR_VALUE_HERE
+export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
+export VERTEX_AI_ENDPOINT_ID='1234567890'
+export GOOGLE_CLOUD_LOCATION=us-central1
+export MCP_TOOLBOX_URL=$(gcloud run services describe toolbox --region $GOOGLE_CLOUD_LOCATION --format "value(status.url)")
 ```
-
-Deployment command:
+Deployment command assuming MCP_TOOLBOX is deployed. Set VERTEX_AI_ENDPOINT_ID & GOOGLE_CLOUD_LOCATION in the adk-web-deploy.sh script:
 Under 'agents' folder, run:
 
 ```
-export IMAGE_TAG="us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist-vertexai-endpoint:latest"
-export MCP_TOOLBOX_URL="Assuming already deployed"
-gcloud run deploy adk-web-ui-vertexai-agent \
-   --image=$IMAGE_TAG \
-   --region=$GOOGLE_CLOUD_LOCATION \
-   --allow-unauthenticated \
-   --source . \
-   --port 8080 \
-   --cpu=4 \
-   --memory=2Gi \
-   --network=default \
-   --subnet=default \
-   --vpc-egress=private-ranges-only \
-   --set-env-vars=VERTEX_AI_ENDPOINT_ID=$VERTEX_AI_ENDPOINT_ID,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=$GOOGLE_CLOUD_LOCATION,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL
+./adk-web-deploy.sh
 ```
 
 Follow the url provided, select 'adk_bug_ticket_agent' from the drop down window, then you can test the agent.

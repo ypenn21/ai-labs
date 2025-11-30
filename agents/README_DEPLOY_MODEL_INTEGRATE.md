@@ -66,4 +66,39 @@ Navigate to the `agents` directory and follow the instructions in the README fil
 ```bash
 cd agents
 ```
-Inside the agents folder, you will find specific instructions for running the gke-agent or the vertexai-agent, depending on which deployment path you chose.
+
+Deploy the ADK Agent to Cloud Run
+
+Set up environment variables:
+```
+GOOGLE_CLOUD_PROJECT=YOUR_VALUE_HERE
+GOOGLE_CLOUD_LOCATION=us-central1 # Or your preferred location
+GOOGLE_GENAI_USE_VERTEXAI=True
+# Only for model hosted on vertexai endpoint
+AGENT_MODE=VertexAI
+VERTEX_AI_ENDPOINT_ID=YOUR_VALUE_HERE
+
+# Model details only for models hosted on gke
+AGENT_MODE=GKE
+MODEL_NAME = YOUR_VALUE_HERE
+MODEL_VERSION= YOUR_VALUE_HERE
+```
+
+Option 1 - Deployment command assuming MCP_TOOLBOX_URL is set and deployed:
+Under 'agents' folder, run:
+
+```
+IMAGE_TAG="$GOOGLE_CLOUD_LOCATION-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist-vertexai-endpoint:latest"
+gcloud run deploy adk-web-ui-vertexai-agent \
+   --image=$IMAGE_TAG \
+   --region=$GOOGLE_CLOUD_LOCATION \
+   --allow-unauthenticated \
+   --source . \
+   --port 8080 \
+   --cpu=4 \
+   --memory=2Gi \
+   --network=default \
+   --subnet=default \
+   --vpc-egress=private-ranges-only \
+   --set-env-vars=VERTEX_AI_ENDPOINT_ID=$VERTEX_AI_ENDPOINT_ID,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=$GOOGLE_CLOUD_LOCATION,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL
+```

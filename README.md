@@ -151,7 +151,7 @@ gcloud services enable sqladmin.googleapis.com \
 gcloud sql instances create adk \
 --database-version=POSTGRES_16 \
 --tier=db-custom-1-3840 \
---region=us-central1 \
+--region=$GOOGLE_CLOUD_LOCATION \
 --edition=ENTERPRISE \
 --enable-google-ml-integration \
 --database-flags cloudsql.enable_google_ml_integration=on \
@@ -241,7 +241,7 @@ First, update `mcp-servers/mcp-toolbox/tools.yaml` for your Cloud SQL instance:
   postgresql:
     kind: cloud-sql-postgres
     project: ${PROJECT_ID}
-    region: us-central1
+    region: ${GOOGLE_CLOUD_LOCATION}
     instance: software-assistant
     database: tickets-db
     user: ${DB_USER}
@@ -279,7 +279,7 @@ Now we can deploy Toolbox to Cloud Run. We'll use the latest [release version](h
 gcloud run deploy toolbox \
     --image us-central1-docker.pkg.dev/database-toolbox/toolbox/toolbox:latest \
     --service-account toolbox-identity \
-    --region us-central1 \
+    --region=$GOOGLE_CLOUD_LOCATION \
     --set-secrets "/app/tools.yaml=tools:latest" \
     --set-env-vars="PROJECT_ID=$PROJECT_ID,DB_USER=postgres,DB_PASS=admin" \
     --args="--tools-file=/app/tools.yaml","--address=0.0.0.0","--port=8080" \
@@ -292,13 +292,13 @@ gcloud run deploy toolbox \
 Verify that the Toolbox is running by getting the Cloud Run logs: 
 
 ```bash 
-gcloud run services logs read toolbox --region us-central1
+gcloud run services logs read toolbox --region $GOOGLE_CLOUD_LOCATION
 ```
 
 Save the Cloud Run URL for the Toolbox service as an environment variable.
 
 ```bash
-export MCP_TOOLBOX_URL=$(gcloud run services describe toolbox --region us-central1 --format "value(status.url)")
+export MCP_TOOLBOX_URL=$(gcloud run services describe toolbox --region $GOOGLE_CLOUD_LOCATION --format "value(status.url)")
 ```
 
 Now we are ready to deploy the ADK Python agent to Cloud Run! :rocket:
@@ -310,7 +310,7 @@ This is where we'll store the agent container image.
 ```bash
 gcloud artifacts repositories create adk \
   --repository-format=docker \
-  --location=us-central1 \
+  --location=$GOOGLE_CLOUD_LOCATION \
   --description="Repository for ADK Python sample agents" \
   --project=$PROJECT_ID
 ```
@@ -320,19 +320,25 @@ gcloud artifacts repositories create adk \
 Build the container image and push it to Artifact Registry with Cloud Build.
 
 ```bash
+#Option 1 - from agents folder use the cloudbuild 
 cd agents
 gcloud builds submit . --config cloudbuild.yaml
+
+#Option 2 - from agents folder use the agents/adk-web-deploy.sh script
+#make sure to update the adk-web-deploy.sh script with your project id, VERTEX_AI_ENDPOINT_ID, and region. The script needs docker to be installed for building the image. If you don't have docker installed, you can use the cloudbuild.yaml option.
+#this also does a gcloud run deploy to deploy the agent to Cloud Run so skip step 13
+./adk-web-deploy.sh
 ```
 
 ### 13 - Deploy the agent to Cloud Run 
 
+*Note - can skip this step if you use the adk-web-deploy.sh script
 You need enable direct vpc-egress on Cloud Run deployment to connect to the Cloud Sql. Network is the same one with the private ip connection to Cloud Sql. Subnet can be any on the network.
 
 ```bash
 cd agents
-export MCP_TOOLBOX_URL=$(gcloud run services describe toolbox --region us-central1 --format "value(status.url)")
+export MCP_TOOLBOX_URL=$(gcloud run services describe toolbox --region $GOOGLE_CLOUD_LOCATION --format "value(status.url)")
 export PROJECT_ID="project-id"
-export DB_URL="postgresql://postgres:pword@internal-ip-address:5432/tickets-db"
 export IMAGE_TAG="us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist-vertexai-endpoint:latest"
 export GOOGLE_CLOUD_LOCATION="us-central1"
 export VERTEX_AI_ENDPOINT_ID=231
