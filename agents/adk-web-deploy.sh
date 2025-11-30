@@ -6,6 +6,7 @@ set -e
 export MCP_TOOLBOX_URL=$(gcloud run services describe toolbox --region us-central1 --format "value(status.url)")
 export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
 export DB_PASS='pword'
+export VERTEX_AI_ENDPOINT_ID=''
 
 # Check if PROJECT_ID is set
 if [ -z "$PROJECT_ID" ]; then
@@ -37,4 +38,4 @@ gcloud run deploy adk-web-ui-vertexai-endpoint \
    --network=default \
    --subnet=default \
    --vpc-egress=private-ranges-only \
-   --set-env-vars=VERTEX_AI_ENDPOINT_ID=id,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=us-central1,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL
+   --set-env-vars=VERTEX_AI_ENDPOINT_ID=$VERTEX_AI_ENDPOINT_ID,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=us-central1,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL
