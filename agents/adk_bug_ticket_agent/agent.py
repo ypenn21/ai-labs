@@ -198,6 +198,7 @@ agent_card = AgentCard(
 # Skills are auto-generated from the agent's tools
 root_agent = get_agent()
 # a2a_app = to_a2a(root_agent, port=AGENT_PORT)
+# this is using the in memory services:session_service=InMemorySessionService(),memory_service=InMemoryMemoryService(),
 request_handler = DefaultRequestHandler(
     agent_executor=AdkAgentToA2AExecutor(root_agent),
     task_store=InMemoryTaskStore(),
