@@ -55,8 +55,6 @@ This approach uses **vLLM** to serve the Gemma 3 model on a GKE cluster, giving 
 
 This approach uses the **Vertex AI Model Garden** to deploy Gemma 3 to a **Vertex AI Endpoint**. This is a fully managed, auto-scaling solution that simplifies deployment and maintenance.
 
-➡️ **Run the script:** [`deploy-gemma-3-1b-ft-to-vertex.sh`](https://github.com/ypenn21/adk-agents/blob/main/fine-tuned-vertex/deploy-gemma-3-1b-ft-to-vertex.sh)
-
 ---
 
 ### 🤖 Run the ADK Agents
