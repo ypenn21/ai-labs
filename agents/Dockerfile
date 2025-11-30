@@ -15,7 +15,8 @@ COPY pyproject.toml ./
 COPY . .
 
 # Install the project itself.
-RUN uv sync --no-dev
+RUN uv lock && \
+    uv sync --frozen --no-install-project --no-dev
 
 # Place executables in the environment at the front of the path
 ENV PATH="/app/.venv/bin:$PATH"
