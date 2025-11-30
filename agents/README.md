@@ -7,7 +7,7 @@ Before proceeding, ensure you have already deployed your Gemma 3 model to either
 The instructions below correspond to the deployment option you chose.
 
 
-1. Set Up Environment Variables
+1. Set Up local dev environment for running ai agent web ui.
 
 Use the file named [.env](.env). This file will configure the agent to communicate with your llm endpoint locally. Assuming mcp-tool box is running locally already if not refer to [Local Environment Setup](https://github.com/ypenn21/ai-labs/blob/main/README.md#local-environment)
 
