@@ -93,8 +93,9 @@ Deployment command:
 Under 'agents' folder, run:
 
 ```
+IMAGE_TAG="us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist-vertexai-endpoint:latest"
 gcloud run deploy adk-web-ui-vertexai-agent \
-   --image=us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist:latest \
+   --image=$IMAGE_TAG \
    --region=us-central1 \
    --allow-unauthenticated \
    --source . \
