@@ -50,6 +50,8 @@ There are two different ways to call Gemini models:
 - Calling Gemini models through Vertex AI APIs on Google Cloud.
 - Calling the Gemini API directly using an API key created via Google AI Studio.
 
+*Note we are going to go with Vertex AI APIs on Google Cloud.
+
 <details open>
 <summary>Gemini API Key</summary> 
 
