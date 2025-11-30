@@ -327,6 +327,8 @@ gcloud builds submit . --config cloudbuild.yaml
 #Option 2 - from agents folder use the agents/adk-web-deploy.sh script
 #make sure to update the adk-web-deploy.sh script with your project id, VERTEX_AI_ENDPOINT_ID, and region. The script needs docker to be installed for building the image. If you don't have docker installed, you can use the cloudbuild.yaml option.
 #this also does a gcloud run deploy to deploy the agent to Cloud Run so skip step 13
+cd agents
+vi adk-web-deploy.sh
 ./adk-web-deploy.sh
 ```
 

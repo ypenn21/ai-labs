@@ -54,6 +54,7 @@ Deployment command assuming MCP_TOOLBOX is deployed. Set VERTEX_AI_ENDPOINT_ID &
 Under 'agents' folder, run:
 
 ```
+vi adk-web-deploy.sh
 ./adk-web-deploy.sh
 ```
 
