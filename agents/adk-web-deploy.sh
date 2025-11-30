@@ -7,7 +7,7 @@ export MCP_TOOLBOX_URL=$(gcloud run services describe toolbox --region us-centra
 export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
 export DB_PASS='pword'
 export VERTEX_AI_ENDPOINT_ID=''
-
+export GOOGLE_CLOUD_LOCATION=us-central1
 # Check if PROJECT_ID is set
 if [ -z "$PROJECT_ID" ]; then
   echo "Error: PROJECT_ID environment variable is not set."
@@ -31,11 +31,11 @@ docker push "$IMAGE_TAG"
 echo "Deployment script finished successfully."
 gcloud run deploy adk-web-ui-vertexai-endpoint \
    --image=$IMAGE_TAG \
-   --region=us-central1 \
+   --region=$GOOGLE_CLOUD_LOCATION \
    --allow-unauthenticated \
    --cpu=4 \
    --memory=2Gi \
    --network=default \
    --subnet=default \
    --vpc-egress=private-ranges-only \
-   --set-env-vars=VERTEX_AI_ENDPOINT_ID=$VERTEX_AI_ENDPOINT_ID,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=us-central1,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL
+   --set-env-vars=VERTEX_AI_ENDPOINT_ID=$VERTEX_AI_ENDPOINT_ID,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=$GOOGLE_CLOUD_LOCATION,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL
