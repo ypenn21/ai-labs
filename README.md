@@ -446,6 +446,7 @@ You should see a JSON response with the list of tools specified in `tools.yaml`.
 ### 4. Run adk web:
 
 ```bash
+source .env
 #in order to download uv https://docs.astral.sh/uv/getting-started/installation/
 rm uv.lock
 uv sync
