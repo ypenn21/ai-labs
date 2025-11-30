@@ -70,4 +70,4 @@ gcloud run deploy adk-web-ui-vertexai-agent \
    --set-env-vars=VERTEX_AI_ENDPOINT_ID=$VERTEX_AI_ENDPOINT_ID,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=$GOOGLE_CLOUD_LOCATION,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL
 ```
 
-Follow the url provided, select 'vertexai_agent' from the drop down window, then you can test the agent.
+Follow the url provided, select 'adk_bug_ticket_agent' from the drop down window, then you can test the agent.
