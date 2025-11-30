@@ -2,7 +2,7 @@
 
 # Running the ADK Agents 🤖
 
-Before proceeding, ensure you have already deployed your Gemma 3 model to either GKE or Vertex AI. As well as deploying [mcp-tool box and cloud sql](https://github.com/ypenn21/ai-labs/blob/main/README.md).
+Before proceeding, ensure you have already deployed your Gemma 3 model to either GKE or Vertex AI. As well as deploying [mcp-tool box and cloud sql](https://github.com/ypenn21/ai-labs/tree/main?tab=readme-ov-file#2---create-a-cloud-sql-postgres-instance).
 
 The instructions below correspond to the deployment option you chose.
 
