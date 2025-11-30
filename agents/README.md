@@ -16,23 +16,23 @@ The `.env` file should look like the file content as below:
 
 ```bash
 # Choose Model Backend: 0 -> Gemini API key, 1 -> Vertex AI
-GOOGLE_GENAI_USE_VERTEXAI=FALSE
+export GOOGLE_GENAI_USE_VERTEXAI=FALSE
 
 # Gemini API key backend config
-GOOGLE_API_KEY=YOUR_VALUE_HERE
+export GOOGLE_API_KEY=YOUR_VALUE_HERE
 
 # Vertex AI backend config
-GOOGLE_CLOUD_PROJECT= YOUR_VALUE_HERE
-GOOGLE_CLOUD_LOCATION= YOUR_VALUE_HERE
+export GOOGLE_CLOUD_PROJECT= YOUR_VALUE_HERE
+export GOOGLE_CLOUD_LOCATION= YOUR_VALUE_HERE
 
 # Only for model hosted on vertexai endpoint
-AGENT_MODE=VertexAI
-VERTEX_AI_ENDPOINT_ID=YOUR_VALUE_HERE
+export AGENT_MODE=VertexAI
+export VERTEX_AI_ENDPOINT_ID=YOUR_VALUE_HERE
 
 # Model details only for models hosted on gke
-AGENT_MODE=GKE
-MODEL_NAME = YOUR_VALUE_HERE
-MODEL_VERSION= YOUR_VALUE_HERE
+#export AGENT_MODE=GKE
+export MODEL_NAME = YOUR_VALUE_HERE
+export MODEL_VERSION= YOUR_VALUE_HERE
 
 export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
 export VERTEX_AI_ENDPOINT_ID='1234567890'
