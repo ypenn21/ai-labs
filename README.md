@@ -368,7 +368,7 @@ Check log to see that this deployment is successfully.
 
 Open the Cloud Run Service URL outputted by the previous step. 
 
-You should see the Web UI for the Software Bug Assistant. At https://cloud-run-host.com/agent/interact/
+You should see the Web UI for the Software Bug Assistant. At https://cloud-run-host.com
 
 
 ## Local Environment 
