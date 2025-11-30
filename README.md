@@ -328,8 +328,6 @@ You need enable direct vpc-egress on Cloud Run deployment to connect to the Clou
 ```bash
 export MCP_TOOLBOX_URL=$(gcloud run services describe toolbox --region us-central1 --format "value(status.url)")
 export PROJECT_ID="project-id"
-# set using Resource name
-export RAG_CORPUS="projects/project-id/locations/region/ragCorpora/rag-corpus-id"
 export DB_URL="postgresql://postgres:pword@internal-ip-address:5432/tickets-db"
 
 #deploy adk web ui bootstrapped
