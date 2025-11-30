@@ -2,14 +2,14 @@
 
 # Running the ADK Agents 🤖
 
-Before proceeding, ensure you have already deployed your Gemma 3 model to either GKE or Vertex AI
+Before proceeding, ensure you have already deployed your Gemma 3 model to either GKE or Vertex AI. As well as deploying [mcp-tool box and cloud sql](https://github.com/ypenn21/ai-labs/blob/main/README.md).
 
 The instructions below correspond to the deployment option you chose.
 
 
 1. Set Up Environment Variables
 
-Use the file named [.env](.env). This file will configure the agent to communicate with your llm endpoint locally.
+Use the file named [.env](.env). This file will configure the agent to communicate with your llm endpoint locally. Assuming mcp-tool box is running locally already if not refer to [Local Environment Setup](https://github.com/ypenn21/ai-labs/blob/main/README.md#local-environment)
 
 
 The `.env` file should look like the file content as below:
@@ -57,7 +57,8 @@ Deployment command:
 Under 'agents' folder, run:
 
 ```
-IMAGE_TAG="us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist-vertexai-endpoint:latest"
+export IMAGE_TAG="us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist-vertexai-endpoint:latest"
+export MCP_TOOLBOX_URL="Assuming already deployed"
 gcloud run deploy adk-web-ui-vertexai-agent \
    --image=$IMAGE_TAG \
    --region=$GOOGLE_CLOUD_LOCATION \
