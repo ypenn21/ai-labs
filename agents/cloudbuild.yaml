@@ -3,9 +3,9 @@ steps:
   args:
   - 'build'
   - '--tag'
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist:latest'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist-vertexai-endpoint:latest'
   - '.'
   - '--file'
   - 'Dockerfile'
 images:
-- 'us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist:latest'
+- 'us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist-vertexai-endpoint:latest'
