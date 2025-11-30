@@ -9,7 +9,7 @@ The instructions below correspond to the deployment option you chose.
 
 1. Set Up Environment Variables
 
-Create a file named `.env` inside the gke-agent directory. This file will configure the agent to communicate with your local, port-forwarded model endpoint.
+Use the file named [.env](.env). This file will configure the agent to communicate with your llm endpoint.
 
 
 The `.env` file should look like the file content as below:
