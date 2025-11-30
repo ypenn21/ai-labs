@@ -93,14 +93,18 @@ Deployment command:
 Under 'agents' folder, run:
 
 ```
-gcloud run deploy vertexai-agent \
-  --source . \
-  --port 8080 \
-  --project $GOOGLE_CLOUD_PROJECT \
-  --allow-unauthenticated \
-  --update-env-vars GOOGLE_CLOUD_PROJECT=$GOOGLE_CLOUD_PROJECT,GOOGLE_CLOUD_LOCATION=us-central1,GOOGLE_GENAI_USE_VERTEXAI=True,VERTEX_AI_ENDPOINT_ID=$VERTEX_AI_ENDPOINT_ID \
-  --region us-central1 \
-  --memory=2Gi
-  ```
+gcloud run deploy adk-web-ui-vertexai-agent \
+   --image=us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist:latest \
+   --region=us-central1 \
+   --allow-unauthenticated \
+   --source . \
+   --port 8080 \
+   --cpu=4 \
+   --memory=2Gi \
+   --network=default \
+   --subnet=default \
+   --vpc-egress=private-ranges-only \
+   --set-env-vars=VERTEX_AI_ENDPOINT_ID=2527670579629129728,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=us-central1,GOOGLE_GENAI_USE_VERTEXAI=TRUE,MCP_TOOLBOX_URL=$MCP_TOOLBOX_URL
+```
 
 Follow the url provided, select 'vertexai_agent' from the drop down window, then you can test the agent.
