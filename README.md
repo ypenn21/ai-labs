@@ -271,7 +271,7 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 gcloud projects add-iam-policy-binding $PROJECT_ID \
     --member serviceAccount:toolbox-identity@$PROJECT_ID.iam.gserviceaccount.com \
     --role roles/cloudsql.client
-
+cd agents
 gcloud secrets create tools --data-file=mcp-servers/mcp-toolbox/tools.yaml
 ```
 
