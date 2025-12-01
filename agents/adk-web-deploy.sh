@@ -9,7 +9,7 @@ export GOOGLE_CLOUD_LOCATION=us-central1
 export MCP_TOOLBOX_URL=$(gcloud run services describe toolbox --region $GOOGLE_CLOUD_LOCATION --format "value(status.url)")
 export AGENT_MODE=VertexAI
 #if AGENT_MODE is GKE, set the following variables will set the model name and version. If AGENT_MODE is VertexAI, the following variables will not matter
-export MODEL_NAME='gemma-3-11b'
+export MODEL_NAME='gemma-3-1b'
 export MODEL_VERSION='latest'
 
 # Check if PROJECT_ID is set
