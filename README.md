@@ -348,6 +348,14 @@ export PROJECT_ID="project-id"
 export IMAGE_TAG="us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist-vertexai-endpoint:latest"
 export GOOGLE_CLOUD_LOCATION="us-central1"
 export VERTEX_AI_ENDPOINT_ID=231
+export PROJECT_NUMBER="project-number"
+
+#the default service account is ${PROJECT_NUMBER}-compute@developer.gserviceaccount.com for cloud run. add aiplatform permission
+gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
+    --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
+    --role="roles/aiplatform.user"
+
+
 #deploy adk web ui bootstrapped
 gcloud run deploy adk-web-ui-vertexai-endpoint \
    --image=$IMAGE_TAG \
