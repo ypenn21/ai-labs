@@ -348,7 +348,7 @@ export PROJECT_ID="project-id"
 export IMAGE_TAG="us-central1-docker.pkg.dev/$PROJECT_ID/adk/adk-web-ui-agent-bug-assist-vertexai-endpoint:latest"
 export GOOGLE_CLOUD_LOCATION="us-central1"
 export VERTEX_AI_ENDPOINT_ID=231
-export PROJECT_NUMBER="project-number"
+export PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')
 
 #the default service account is ${PROJECT_NUMBER}-compute@developer.gserviceaccount.com for cloud run. add aiplatform permission
 gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
