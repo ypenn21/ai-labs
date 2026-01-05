@@ -122,8 +122,6 @@ gcloud compute networks create default \
 
 These instructions walk through the process of deploying the Software Bug Assistant agent to Google Cloud, including Cloud Run and Cloud SQL (PostgreSQL). This setup also adds RAG capabilities to the tickets database, using the [google_ml_integration](https://cloud.google.com/blog/products/ai-machine-learning/google-ml-intergration-extension-for-cloud-sql) vector plugin for Cloud SQL, and the `text-embeddings-005` model from Vertex AI.
 
-![](images/adk-cloud-architecture.png)
-
 *Note you can use Vertexai or AI Studio api key
 
 ### Presetup 
