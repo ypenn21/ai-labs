@@ -2,6 +2,7 @@ import os
 from enum import Enum
 from google.adk.agents import Agent
 from google.adk.models.lite_llm import LiteLlm
+from google.genai import types
 from a2a.types import AgentCard, AgentCapabilities, AgentSkill
 from a2a.server.apps.jsonrpc.starlette_app import A2AStarletteApplication
 from a2a.server.request_handlers import DefaultRequestHandler
@@ -20,6 +21,7 @@ class AgentMode(Enum):
     GEMINI = "Gemini"
     VERTEXAI = "VertexAI"
     GKE = "GKE"
+    GEMMA = "Gemma"
 
 # --- Global Initializations ---
 # For SQLite, make sure the directory for the DB file is writable.
@@ -27,7 +29,7 @@ class AgentMode(Enum):
 
 AGENT_PORT = os.environ.get("AGENT_PORT", "8000")
 AGENT_URL = os.environ.get("AGENT_URL", f"http://127.0.0.1:{AGENT_PORT}")
-AGENT_MODE = os.environ.get("AGENT_MODE", f"{AgentMode.VERTEXAI.value}")
+AGENT_MODE = os.environ.get("AGENT_MODE", f"{AgentMode.GEMMA.value}")
 SUPPORTED_CONTENT_TYPES = ["text", "text/plain"]
 #DB_URL = os.environ.get("DB_URL", "postgresql://postgres:admin@localhost:5432/tickets-db")
 
@@ -109,6 +111,37 @@ class ServiceManager:
         )
         return root_agent
 
+    def _init_gemma_agent(self):
+        """Initializes the Gemma 3 agent with text-based function calling."""
+        from .gemma_callbacks import (
+            generate_tool_signatures,
+            after_model_gemma_callback,
+            set_tool_map,
+        )
+
+        endpoint_id = os.getenv("VERTEX_AI_ENDPOINT_ID")
+        print(f"Initializing Gemma Agent with endpoint: {endpoint_id}")
+
+        # Collect tools for signature generation and tool map
+        tools = [get_current_date, *get_toolbox_tools()]
+        tool_sigs = generate_tool_signatures(tools)
+        set_tool_map(tools)
+
+        return Agent(
+            model=LiteLlm(model=f"vertex_ai/openai/{endpoint_id}"),
+            name="it_bug_assistant_agent",
+            description="An agent to help users with bug tickets, including searching, creating, and updating them.",
+            instruction=system_prompt.gemma_agent_instruction.format(
+                tool_signatures=tool_sigs
+            ),
+            generate_content_config=types.GenerateContentConfig(
+                temperature=0.2,       # Low temperature to reduce hallucination
+                max_output_tokens=1024, # Prevent runaway generation
+            ),
+            # No tools passed — Gemma handles tools via text, not native function calling
+            after_model_callback=after_model_gemma_callback,
+        )
+
     def _init_agent_executor(self):
         """Initializes the agent executor."""
         print("Initializing AdkAgentToA2AExecutor...")
@@ -138,6 +171,8 @@ class ServiceManager:
                 self._root_agent = self._init_vertexai_agent()
             elif AGENT_MODE == AgentMode.GKE.value:
                 self._root_agent = self._init_gke_ai_agent()
+            elif AGENT_MODE == AgentMode.GEMMA.value:
+                self._root_agent = self._init_gemma_agent()
             else:
                 raise ValueError(f"Unsupported AGENT_MODE: {AGENT_MODE}")
         return self._root_agent
